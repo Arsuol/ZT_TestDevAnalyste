@@ -35,6 +35,22 @@ Traditionnal approaches for Obfuscation Detection:
 The ML Approach: 
 > illustrate two ML approaches: a feature-based approach and a feature-less end-to-end approach.
 
+>Data and Experiments
+>
+>To develop our models, we collected non-obfuscated data from tens of thousands of endpoint events and generated obfuscated data using a variety of methods in Invoke-DOSfuscation. We developed our models using roughly 80 percent of the data as training data, and tested them on the remaining 20 percent. We ensured that our train-test split was stratified. For featureless ML (i.e. neural networks), we simply input Unicode code points into the first layer of the CNN model. The first layer converts the code point into semantically meaningful numerical representations (called embeddings) before feeding it into the rest of the neural network.  
+>
+>For the Gradient Boosted Tree method, we generated a number of features from the raw command lines. The following are some of them: 
+>> Length of the command line  
+>> The number of carets in the command line  
+>> The count of pipe symbols  
+>> The fraction of white space in the command line  
+>> The fraction of special characters  
+>> Entropy of the string  
+>> The frequency of the strings “cmd” and “power” in the command line
+>
+>While each of these features individually is a weak signal and could not possibly be a good discriminator on its own, a flexible classifier such as a Gradient Boosted Tree – trained on sufficient data with these features – is able to classify obfuscated and non-obfuscated command lines in spite of the aforementioned difficulties.
+
+
 ### Obfuscation Techniques
 
 #### cynet article
@@ -83,7 +99,11 @@ Found multiple regex to de-obfuscate powershell commands when:
   - using string formatting
 
 
-## Input Data Observations
+### Machine Learning Specifics
+#### Text Data to numbers
+https://medium.com/fintechexplained/nlp-text-data-to-numbers-d28d32294d2e
+
+## 2. Input Data Observations
 Obfuscation techniques used (quick visual scan):  
   - backticks
   - up/low case
