@@ -111,3 +111,49 @@ Obfuscation techniques used (quick visual scan):
   - string concatenation
   - did not spot redundant white spaces
   - did not spot base64 encoding
+
+## 3. Problem with the data and possible solutions
+Problem: ML algorithms work on numeric data.  
+String analysis: need a way to translate strings into numeric format, and find a 
+way work on this data (keep semantic, and so on)
+
+### Feature Machin Learning
+Define a number of features and work on them (see fireeye article).  
+Features that can be used:
+  - Length of the command line  
+  - The number of carets in the command line  
+  - The count of pipe symbols  
+  - The fraction of white space in the command line  
+  - The fraction of special characters  
+  - Entropy of the string  
+  - The frequency of the strings “cmd” and “power” in the command line
+  - Inclusion of -f or -F
+
+### Hack?
+Use a deobfuscation tool on every command line  
+Compute the distance between the source and result string  
+Use the lenght of source, lenght of result and distance with ML algorithms
+
+### Translate strings into numeric data
+1. Hash the strings  
+   https://medium.com/value-stream-design/introducing-one-of-the-best-hacks-in-machine-learning-the-hashing-trick-bf6a9c8af18f
+2. Dimensionality Reduction:  
+   https://towardsdatascience.com/still-parsing-user-agent-strings-for-your-machine-learning-models-use-this-instead-8928c0e7e74f  
+   Use algorithm to translte string into a vector of fixed size (hopefully)
+   keeping features of the strings, and minimizing the loss of information  
+   used in article: fastText algorithm
+3. Multiple solutions named in this article  
+   https://dzone.com/articles/handling-character-data-for-machine-learninghttps://dzone.com/articles/handling-character-data-for-machine-learning  
+   Label encoding  
+   One hot encoding  
+   Frequency-based encoding  
+   Target mean encoding  
+   Binary encoding  
+   Hash encoding  
+   link to other techniques: http://www.willmcginnis.com/2015/11/29/beyond-one-hot-an-exploration-of-categorical-variables/
+
+
+## 4. Implementation tests
+### a. character based
+https://machinelearningmastery.com/develop-character-based-neural-language-model-keras/  
+
