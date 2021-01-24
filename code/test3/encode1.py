@@ -77,6 +77,9 @@ for line in lines:
 	encoded_seq = [mapping[char] for char in line]
 	# store
 	sequences.append(encoded_seq)
+# vocabulary size
+vocab_size = len(mapping)
+print('Vocabulary Size: %d' % vocab_size)
 
 # split sequences into two lists: clear and obfuscated
 clear_seqs = sequences[:clear_size]
