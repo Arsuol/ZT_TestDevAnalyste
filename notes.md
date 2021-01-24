@@ -160,7 +160,15 @@ to encode strings (test3) and https://machinelearningmastery.com/machine-learnin
 to test multiple featureless machin learning models.  
 The best tested model was DecisionTreeClassifier with an accuracy >92%.  
 Some model got really low (~50%) accuracy: i think i missed something, or maybe 
-the models were not adapted to this kind of problem...
+the models were not adapted to this kind of problem...  
+
+Notes:
+  - vector size might be an issue
+  - found techniques to reduce vector size
+  - embedding
+  - dimensionality reduction
+
+Might want to use reduction techniques for further tesing
 
 ### b. Feature Based
 https://aaltodoc.aalto.fi/bitstream/handle/123456789/43575/master_Pogosova_Mariam_2020.pdf?sequence=1&isAllowed=y
