@@ -20,3 +20,7 @@ note: using the same encoding for both files
 ## test4
 working featureless Machine Learning examples
 using multiple models and comparing them
+
+## test5
+working manual feature extraction  
+using multiple models and comparting them

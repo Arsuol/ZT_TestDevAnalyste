@@ -172,3 +172,9 @@ Might want to use reduction techniques for further tesing
 
 ### b. Feature Based
 https://aaltodoc.aalto.fi/bitstream/handle/123456789/43575/master_Pogosova_Mariam_2020.pdf?sequence=1&isAllowed=y
+
+Manual feature extraction:
+  - extracted features presented in the fireeye article
+  - tested multiple models with encouraging results
+  - 97%+ accuracy for a couple of models
+  - code in test5
