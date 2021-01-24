@@ -155,5 +155,12 @@ Use the lenght of source, lenght of result and distance with ML algorithms
 
 ## 4. Implementation tests
 ### a. character based
-https://machinelearningmastery.com/develop-character-based-neural-language-model-keras/  
+Used article: https://machinelearningmastery.com/develop-character-based-neural-language-model-keras/
+to encode strings (test3) and https://machinelearningmastery.com/machine-learning-in-python-step-by-step/
+to test multiple featureless machin learning models.  
+The best tested model was DecisionTreeClassifier with an accuracy >92%.  
+Some model got really low (~50%) accuracy: i think i missed something, or maybe 
+the models were not adapted to this kind of problem...
 
+### b. Feature Based
+https://aaltodoc.aalto.fi/bitstream/handle/123456789/43575/master_Pogosova_Mariam_2020.pdf?sequence=1&isAllowed=y

@@ -16,3 +16,7 @@ from https://machinelearningmastery.com/develop-character-based-neural-language-
 ## test3
 encoding clear and obfuscated data.  
 note: using the same encoding for both files
+
+## test4
+working featureless Machine Learning examples
+using multiple models and comparing them
