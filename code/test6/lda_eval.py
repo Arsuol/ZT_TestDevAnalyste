@@ -60,8 +60,8 @@ for line in obf_lines:
 # import dataset
 names = ['length', 'upper', 'operator', 'white', 'special', 'cmdpower', 'pipe', 
         'carets', 'fF']
-clear_dataset = pd.DataFrame.from_records(obf_features, columns=names)
-obf_dataset   = pd.DataFrame.from_records(clear_features, columns=names)
+clear_dataset = pd.DataFrame.from_records(clear_features, columns=names)
+obf_dataset   = pd.DataFrame.from_records(obf_features, columns=names)
 # add obf/not obf bool
 l = [0] * len(clear_dataset.index)
 clear_dataset.insert(loc=0, column='obf', value=l)
