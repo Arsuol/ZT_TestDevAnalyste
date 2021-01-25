@@ -178,3 +178,11 @@ Manual feature extraction:
   - tested multiple models with encouraging results
   - 97%+ accuracy for a couple of models
   - code in test5
+
+### c. Confidence intervals
+https://machinelearningmastery.com/machine-learning-in-python-step-by-step/
+https://towardsdatascience.com/how-to-add-confidence-intervals-to-any-model-7bbb9f80fd9c
+
+test6
+
+### d. Prediction intervals

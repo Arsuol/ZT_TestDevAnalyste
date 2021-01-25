@@ -24,3 +24,6 @@ using multiple models and comparing them
 ## test5
 working manual feature extraction  
 using multiple models and comparting them
+
+## test6
+adding confidence / interval to test5 code
