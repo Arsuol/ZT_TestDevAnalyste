@@ -27,3 +27,10 @@ using multiple models and comparting them
 
 ## test6
 adding confidence / interval to test5 code
+
+## test8
+save and load models with joblib  
+
+## test9
+load a pre-trained model and apply ona new command line passed as scypt's
+argument
