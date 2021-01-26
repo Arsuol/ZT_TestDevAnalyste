@@ -32,10 +32,10 @@ def get_features(string):
 model_file = '../test8/lda_trained.sav'
 
 # Examples non-obfuscated
-#cmd_line = 'ping 172.16.3.2'
+cmd_line = 'ping 172.16.3.2'
 #cmd_line = '"C:\Program Files (x86)\Google\Chrome\Application\81.0.4044.129\Installer\setup.exe" --type=crashpad-handler /prefetch:7 --monitor-self-annotation=ptype=crashpad-handler --database=C:\Windows\TEMP\Crashpad --url=https://clients2.google.com/cr/report --annotation=channel= --annotation=plat=Win64 --annotation=prod=Chrome --annotation=ver=81.0.4044.129 --initial-client-data=0x210,0x214,0x218,0x1ec,0x21c,0x7ff7471176a0,0x7ff7471176b0,0x7ff7471176c0'
 # Examples obfuscated
-cmd_line = '&("{0}{1}"-f \'pin\',\'g\') ("{2}{0}{1}" -f \'1\',\'00\',\'192.168.5.\')'
+#cmd_line = '&("{0}{1}"-f \'pin\',\'g\') ("{2}{0}{1}" -f \'1\',\'00\',\'192.168.5.\')'
 #cmd_line = '${c`OMp}=[adsi]"WinNT://$($env:ComputerName)"'
 
 # Examples from the fireeye article (obfuscated)
@@ -51,17 +51,12 @@ cmd_line = '&("{0}{1}"-f \'pin\',\'g\') ("{2}{0}{1}" -f \'1\',\'00\',\'192.168.5
 # feature extraction
 features = []
 features.append(get_features(cmd_line))
-#print(features)
 
 ###############################################################################
 # create dataset
 names = ['length', 'upper', 'operator', 'white', 'special', 'cmdpower', 'pipe', 
         'carets', 'fF']
 dataset = pd.DataFrame.from_records(features, columns=names)
-#l = [0] * len(clear_dataset.index)
-#clear_dataset.insert(loc=0, column='obf', value=l)
-#print(dataset)
-#print(dataset.describe()) # descriptions
 
 ###############################################################################
 # Load trained model
@@ -71,5 +66,13 @@ model = joblib.load(model_file)
 # make predictions
 predictions = model.predict(dataset)
 proba = model.predict_proba(dataset)
-print(predictions)
-print(proba)
+
+
+###############################################################################
+# print results
+if predictions == 1: 
+    print('prediction: obfuscated')
+    print('confidence: ' + str(proba[0][1]*100) + '%')
+else: 
+    print('prediction: non-obfuscated')
+    print('confidence: ' + str(proba[0][0]*100) + '%')
