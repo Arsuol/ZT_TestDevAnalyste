@@ -78,7 +78,7 @@ data = pd.concat(frames)
 array = data.values
 X = array[:,1:]
 y = array[:,:1]
-X_train, X_validation, Y_train, Y_validation = train_test_split(X, y, test_size=0.20, random_state=1)
+X_train, X_validation, Y_train, Y_validation = train_test_split(X, y, test_size=0.20)
 
 ###############################################################################
 # Make predictions on validation dataset
