@@ -186,3 +186,15 @@ https://towardsdatascience.com/how-to-add-confidence-intervals-to-any-model-7bbb
 test6
 
 ### d. Prediction intervals
+test7 -> abandonned for more urgent matters: implemented in test9
+
+### e. Save and Load models
+https://machinelearningmastery.com/save-load-machine-learning-models-python-scikit-learn/  
+implemeted in test8 (using joblib instead of pickle presented in the article)
+
+
+## 5. Analysis
+### Models
+### Feature vs Featureless
+### Features
+
