@@ -1,0 +1,48 @@
+\begin{frame}{Sources}
+dummy
+\end{frame}
+
+\begin{frame}{Obfuscation Techniques}
+  Most common PowerShell obfuscation techniques:
+
+  \begin{block}{Concatenation}
+    \$a = “http://malware.com/cybad.exe"\\
+    \$b = (‘h’+’ttp://ma’+’lware.com/cybad.exe’)
+  \end{block}
+
+  \begin{block}{Reordering}
+    '\{1\}\{0\}' -f 'ffee','co'
+  \end{block}
+
+  \begin{block}{Escaping characters}
+    http://malware.com/cybad.exe \\
+    \$a = (“http://mal`ware.c`om.cy`bad.ex`e”)
+  \end{block}
+
+  \begin{block}{Base64 format}
+    powershell.exe -encodedCommand ZABpAHIAIAAiAGMAOgBcAHAAYQBzAHMAdwBvAHIAZABzACIAIAA=  
+  \end{block}
+
+  \begin{block}{Text modifications (Up/Low case, trailing white spaces, ...)}
+    \${VALIdexItCOdES} = @(0)
+  \end{block}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{De-Obfuscation Techniques}
+  Rule-based:
+  \begin{itemize}
+    \item blacklist (words, strings)
+    \item Regular Expressions: *\{\textbackslash d\}* : '\{1\}\{0\}' -f 'ffee','co'
+    \item Fast
+    \item Easy to implement
+    \item extensible
+    \item clear
+    \item Can be bypassed
+    \item False positives
+    \item Huge maintenance
+  \end{itemize}
+
+  Machine Learning:
+\end{frame}

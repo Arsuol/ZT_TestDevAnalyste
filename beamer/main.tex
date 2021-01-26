@@ -1,0 +1,67 @@
+%\documentclass[t,12pt]{beamer}
+\documentclass[compress]{beamer}
+\usetheme{metropolis}
+\useoutertheme[subsection=false]{miniframes}
+%\usetheme[RGB={12 72 66}]{Simple} % color
+%\useoutertheme{tree}              % navigation
+
+% -- packages
+% -- French packages
+%\usepackage[T1]{fontenc}
+%\usepackage[latin1]{inputenc}
+%\usepackage[frenchb]{babel}
+\usepackage[utf8]{inputenc}
+% -- other packages
+\usepackage{changepage}
+\usepackage{lipsum}
+\usepackage{listings}
+
+% -- Outline options
+\AtBeginSection[]{
+  \begin{frame}{Sommaire}
+  \small \tableofcontents[currentsection, hideothersubsections]
+  \end{frame}
+}
+
+% -- title page options
+\title{Zero Trust: Test dev. analyste}
+%\subtitle{Groupe POEI-2 : A. Loussert, A. Soucheyre, D. Teodori}
+\author{Arthur Loussert}
+%\date{24 novembre 2020}
+
+% -- pictures path
+\graphicspath{{./parts/extra/}}
+
+
+\begin{document}
+
+% -- title frame
+\frame{\titlepage}
+
+% -- Outline
+\section*{Sommaire}
+\begin{frame}
+    \tableofcontents[hideothersubsections]
+\end{frame}
+
+% -- Begin !
+\section{Preliminary Research}
+    \input{./parts/Prelim.tex}
+
+\section{ML Research}
+    \input{./parts/ML.tex}
+
+\section{Work Performed}
+    \input{./parts/Work.tex}
+
+
+\end{document}
+
+%\begin{figure}
+%    \includegraphics[height=.4\textheight]{product.png}
+%    \center
+%\end{figure}
+%
+%\begin{adjustwidth}{-.5cm}{-5cm}
+%\begin{minipage}[t]{0.45\textwidth}
+%\end{minipage}
